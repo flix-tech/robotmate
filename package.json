@@ -1,5 +1,5 @@
 {
-  "name": "robot-mate-format",
+  "name": "robot-mate",
   "version": "0.10.0",
   "description": "A format to test robots",
   "main": "lib/parser.js",
