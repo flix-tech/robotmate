@@ -1,0 +1,14 @@
+LANG: en_US
+
+HM says : "I would like to go to {{city_2}}"
+RM equals : "What's your departure city?"
+RM contains : "departure"
+RM starts with  : "What"
+
+
+HM says : "{{city_1}}"
+RM equals : "On which day do you want to travel?"
+
+HM says : "Tomorrow"
+RM contains : "Would you like to select this option?"
+

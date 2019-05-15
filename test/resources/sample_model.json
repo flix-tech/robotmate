@@ -1,0 +1,18 @@
+{
+    "lang": "en_US",
+    "fileName": "test/resources/sample.rmc",
+    "conversation": [
+        {
+            "line": 3,
+            "actor": "HM",
+            "action": "says",
+            "parameter": "Hello Gugu!"
+        },
+        {
+            "line": 5,
+            "actor": "RM",
+            "action": "starts with",
+            "parameter": "Hello Granny"
+        }
+    ]
+}

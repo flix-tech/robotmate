@@ -1,0 +1,15 @@
+LANG: en_US
+
+HM says : "I would like to go to Berlin"
+RM equals : "What's your departure city?"
+RM contains : "departure"
+RM starts with  : "What"
+
+
+HM says : "Berlin"
+RM equals : "Ok, lets go to Berlin there! When do you want to go?"
+RM includes any : "Berlin" "Munich"
+
+HM says : "Tomorrow"
+RM equals : "Have a ticket! Enjoy your ride!"
+RM excludes : "No" "tomorrow"
