@@ -2,7 +2,7 @@
 
 ## About
 
-This project is based on [Botium](https://botium.atlassian.net) and it used for testing the communication path with the a chatbot using **dialogflow**. Here you will find how to setup and run the project, plus conversations simulating a real user in order to test the platform answers to guarantee a better coverage of the bot.
+This project is based on [Botium](https://botium.atlassian.net) and is used for testing the communication path with a chatbot using **dialogflow**. Here you will find how to setup and run the project, plus conversations simulating a real user in order to test the platform answers to guarantee a better coverage of the bot.
 
 ## Installation
 
