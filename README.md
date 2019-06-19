@@ -6,7 +6,7 @@
 
 <img src="robotmate.jpg" alt="Robot Mate" width="600"/>
 
-This project is based on [Botium](https://botium.atlassian.net) and is used for testing the communication path with a chatbot using **dialogflow**. Here you will find how to setup and run the project, plus conversations simulating a real user in order to test the platform answers to guarantee a better coverage of the bot.
+This project is based on [Botium](https://botium.atlassian.net/wiki/spaces/BOTIUM/overview) and is used for testing the communication path with a chatbot using **dialogflow**. Here you will find how to setup and run the project, plus conversations simulating a real user in order to test the platform answers to guarantee a better coverage of the bot.
 
 ## Installation
 
@@ -15,6 +15,7 @@ This project is based on [Botium](https://botium.atlassian.net) and is used for 
 1. Start by downloading and installing [NodeJs](https://nodejs.org/en/download/)
 2. Open your terminal (Mac, Linux, ...) or Prompt (Windows)
 3. Execute the following command in the terminal: `npm install -g "git+https://git@github.com/flix-tech/robotmate.git#v0.11.1"`
+
 
 ### Another way
 
