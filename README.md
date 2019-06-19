@@ -14,7 +14,8 @@ This project is based on [Botium](https://botium.atlassian.net/wiki/spaces/BOTIU
 
 1. Start by downloading and installing [NodeJs](https://nodejs.org/en/download/)
 2. Open your terminal (Mac, Linux, ...) or Prompt (Windows)
-3. Execute the following command in the terminal: `npm install -g "git+https://git@github.com/flix-tech/robotmate.git#v0.11.0"`
+3. Execute the following command in the terminal: `npm install -g "git+https://git@github.com/flix-tech/robotmate.git#v0.11.1"`
+
 
 ### Another way
 
