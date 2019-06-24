@@ -14,7 +14,7 @@ This project is based on [Botium](https://botium.atlassian.net/wiki/spaces/BOTIU
 
 1. Start by downloading and installing [NodeJs](https://nodejs.org/en/download/)
 2. Open your terminal (Mac, Linux, ...) or Prompt (Windows)
-3. Execute the following command in the terminal: `npm install -g "git+https://git@github.com/flix-tech/robotmate.git#v0.11.1"`
+3. Execute the following command in the terminal: `npm install -g "git+https://git@github.com/flix-tech/robotmate.git#v0.12.0"`
 
 
 ### Another way
@@ -82,6 +82,8 @@ The command above can be used to run the tests within a folder, using the specif
 2. **--conf** **configuration file** *(optional)*: This where the path of the file to setup the botium capabilities can be set. In case the parameter is not set it will look inside of the *root* folder for a file called *botium.json*
 
 3. **--jobs** **amount of jobs** *(optional)*: The name *jobs* is the equivalent to *threads*, so the parameter define the amount of jobs (threads) that will be used to split the load and test things in parallel in case it is necessary. Each thread works independently from each other.
+
+4. **--retries** **number of total retries** *(optional)*: Number of retries for the conversations in case you have flaky test.
 
 ### Different ways of using the parameters
 
