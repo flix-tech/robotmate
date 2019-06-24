@@ -10,16 +10,17 @@ const rimraf = require('rimraf');
 const devnull = require('dev-null');
 require('colors');
 const { argv } = require('yargs')
-  .usage('Usage: $0 <path> --conf <conf> [-jobs [num]]')
+  .usage('Usage: $0 <path> --conf <conf> [--jobs [num]] [--retries [num]]')
   .option('conf')
   .describe('conf', 'Botium configuration.')
-  .describe('jobs', 'Number of parallel executions to trigger.');
+  .describe('jobs', 'Number of parallel executions to trigger.')
+  .describe('retries', 'Number of retries to perform when a conversation fails.');
 
 const parser = require('./lib/parser.js');
 const runner = require('./lib/runner.js');
 
-
-const run = (data, childTest) => {
+const maxRetries = argv.retries || 0;
+const run = (data, childTest, retries = 0) => {
   const driver = new BotDriver();
   const container = driver.BuildFluent().Start();
 
@@ -33,8 +34,12 @@ const run = (data, childTest) => {
       childTest.end();
     })
     .catch((error) => {
-      childTest.fail(error);
-      childTest.end();
+      if (retries < maxRetries) {
+        run(data, childTest, retries + 1);
+      } else {
+        childTest.fail(error);
+        childTest.end();
+      }
     });
 };
 

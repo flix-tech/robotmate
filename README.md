@@ -83,6 +83,8 @@ The command above can be used to run the tests within a folder, using the specif
 
 3. **--jobs** **amount of jobs** *(optional)*: The name *jobs* is the equivalent to *threads*, so the parameter define the amount of jobs (threads) that will be used to split the load and test things in parallel in case it is necessary. Each thread works independently from each other.
 
+4. **--retries** **number of total retries** *(optional)*: Number of retries for the conversations in case you have flaky test.
+
 ### Different ways of using the parameters
 
 ***Specifying conversation folder***
