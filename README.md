@@ -128,7 +128,7 @@ RM includes any : "What" "about" "?"
 
 HM says: "About intelligent machines."
 RM excludes: "Ops" "I didn't understand"
-RM start with: "Interesting"
+RM starts with: "Interesting"
 
 HM says: "Do you know any?"
 RM contains: "Yes"
@@ -164,11 +164,11 @@ RM equals: "Yes, I'm an intelligent machine created to rule the world!"
         RM excludes: "Ops" "I didn't understand"
     ```
 
-3. **start with**: *Start with* verifies if the message checked must start with the text stated.
+3. **starts with**: *Starts with* verifies if the message checked starts with the text stated.
     - e.g: The statement below is checking if **Interesting** is at the beginning of the message.
 
     ```r
-        RM start with: "Interesting"
+        RM starts with: "Interesting"
     ```
 
 4. **contains**: This statement has the same functionality of the method contains used in programming languages.
