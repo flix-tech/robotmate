@@ -3,25 +3,24 @@
 const { BotDriver } = require('botium-core');
 const fs = require('fs');
 const tap = require('tap');
-const csv = require('csv-parser');
-const mustache = require('mustache');
 const klawSync = require('klaw-sync');
 const rimraf = require('rimraf');
 const devnull = require('dev-null');
 require('colors');
-const { argv } = require('yargs')
-  .usage('Usage: $0 <path> --conf <conf> [--jobs [num]] [--retries [num]]')
-  .option('conf')
+const { argv } = require('yargs').strict()
+  .usage('Usage: $0 <path> [--conf conf] [--jobs num] [--retries num]')
   .describe('conf', 'Botium configuration.')
+  .nargs('conf', 1)
   .describe('jobs', 'Number of parallel executions to trigger.')
-  .describe('retries', 'Number of retries to perform when a conversation fails.');
+  .nargs('jobs', 1)
+  .describe('retries', 'Number of retries to perform when a conversation fails.')
+  .nargs('retries', 1);
 
 const parser = require('./lib/parser.js');
 const runner = require('./lib/runner.js');
 
-const maxRetries = argv.retries || 0;
-const run = (data, childTest, retries = 0) => {
-  const driver = new BotDriver();
+
+const run = (driver, data, childTest, maxRetries, retries = 0) => {
   const container = driver.BuildFluent().Start();
 
   new runner.ConversationProcessor(container, data.fileName, data.conversation, data.lang).process();
@@ -35,7 +34,7 @@ const run = (data, childTest, retries = 0) => {
     })
     .catch((error) => {
       if (retries < maxRetries) {
-        run(data, childTest, retries + 1);
+        run(driver, data, childTest, maxRetries, retries + 1);
       } else {
         childTest.fail(error);
         childTest.end();
@@ -64,43 +63,48 @@ const report = () => {
   }
 };
 
-const conversationsPath = argv._[0] || '.';
-process.env.BOTIUM_CONFIG = argv.conf || 'botium.json';
 
-const files = conversationsPath.endsWith('.rmc') ? [conversationsPath]
-  : klawSync(conversationsPath)
-    .filter(file => file.path.endsWith('.rmc'))
-    .map(file => file.path);
+const BOTIUM_CONF_DEFAULT = 'botium.json';
+const main = () => {
+  const conversationsPath = argv._[0] || '.';
 
-tap.jobs = argv.jobs || 1;
-tap.pipe(devnull());
-
-files.forEach((filePath) => {
-  const testName = filePath;
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-  const csvFilePath = filePath.replace('.rmc', '.csv');
-  if (fs.existsSync(csvFilePath)) {
-    const csvRows = [];
-    fs.createReadStream(csvFilePath)
-      .pipe(csv({ delimiter: ',' }))
-      .on('data', csvRow => csvRows.push(csvRow))
-      .on('end', () => {
-        csvRows.forEach((csvRow, index) => {
-          const processedFileContent = mustache.render(fileContent, csvRow);
-          const data = parser.parseString(processedFileContent, filePath);
-          tap.test(`${testName} CSV Line : ${index + 1}`, (childTest) => {
-            data.fileName = `${data.fileName}:${index + 1}`;
-            run(data, childTest, this.timeout);
-          });
-        });
-      });
+  if (argv.conf) {
+    if (fs.existsSync(argv.conf)) {
+      process.env.BOTIUM_CONFIG = argv.conf;
+    } else {
+      console.error(`Configuration file ${argv.conf} does not exist`);
+      process.exit(1);
+    }
   } else {
+    console.info(`No configuration provided, using: ${BOTIUM_CONF_DEFAULT}`);
+    process.env.BOTIUM_CONFIG = BOTIUM_CONF_DEFAULT;
+  }
+  let driver = null;
+  try {
+    driver = new BotDriver();
+  } catch (e) {
+    console.error('There is a problem with your Botium configuration, please check.');
+    throw e;
+  }
+
+
+  const files = conversationsPath.endsWith('.rmc') ? [conversationsPath]
+    : klawSync(conversationsPath)
+      .filter(file => file.path.endsWith('.rmc'))
+      .map(file => file.path);
+  const maxRetries = argv.retries || 0;
+  tap.jobs = argv.jobs || 1;
+  tap.pipe(devnull());
+  files.forEach((filePath) => {
+    const testName = filePath;
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
     const data = parser.parseString(fileContent, filePath);
     tap.test(testName, (childTest) => {
-      run(data, childTest, this.timeout);
+      run(driver, data, childTest, maxRetries);
     });
-  }
-});
+  });
+  tap.tearDown(clean);
+  tap.tearDown(report);
+};
 
-tap.tearDown(clean);
-tap.tearDown(report);
+main();
