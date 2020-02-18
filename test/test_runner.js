@@ -1,3 +1,4 @@
+require('tap').mochaGlobals();
 const assert = require('assert');
 const parser = require('../lib/parser.js');
 const { ConversationProcessor, DIALOGFLOW_CONSTANTS } = require('../lib/runner.js');

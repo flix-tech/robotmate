@@ -1,3 +1,4 @@
+require('tap').mochaGlobals();
 const assert = require('assert');
 const fs = require('fs');
 const parser = require('../lib/parser.js');
